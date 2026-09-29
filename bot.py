@@ -3,9 +3,9 @@ import requests
 import random
 from openai import OpenAI
 
-TELEGRAM_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
-CHANNEL_ID = os.environ["CHANNEL_ID"]
-DEEPSEEK_KEY = os.environ["DEEPSEEK_API_KEY"]
+TELEGRAM_TOKEN = os.environ["8934519828:AAG5KlRqjIqXHYxbTQPQySw0M_-oePjAsBE"]
+CHANNEL_ID = os.environ["-1003597498641"]
+DEEPSEEK_KEY = os.environ["sk-eb8a7d32e99443eda88c7e596c7d415d"]
 
 client = OpenAI(api_key=DEEPSEEK_KEY, base_url="https://api.deepseek.com")
 
