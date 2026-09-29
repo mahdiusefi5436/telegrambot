@@ -5,9 +5,12 @@ from openai import OpenAI
 
 TELEGRAM_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 CHANNEL_ID = os.environ["CHANNEL_ID"]
-DEEPSEEK_KEY = os.environ["DEEPSEEK_API_KEY"]
+GROQ_API_KEY = os.environ["GROQ_API_KEY"]
 
-client = OpenAI(api_key=DEEPSEEK_KEY, base_url="https://api.deepseek.com")
+client = OpenAI(
+    api_key=GROQ_API_KEY,
+    base_url="https://api.groq.com/openai/v1"
+)
 
 topics = [
     "یه بیوگرافی کوتاه و دلشکسته بنویس، پر از حس تنهایی و غم",
@@ -22,7 +25,7 @@ topics = [
 selected = random.choice(topics)
 
 response = client.chat.completions.create(
-    model="deepseek-chat",
+    model="llama-3.3-70b-versatile",
     messages=[
         {"role": "system", "content": "تو یه نویسنده محتوای تلگرامی هستی. متن‌های کوتاه، احساسی و تأثیرگذار بنویس. از ایموجی‌های مناسب استفاده کن."},
         {"role": "user", "content": selected}
