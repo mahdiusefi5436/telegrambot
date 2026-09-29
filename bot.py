@@ -25,7 +25,7 @@ topics = [
 selected = random.choice(topics)
 
 response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+            model="openai/gpt-oss-20b",
     messages=[
         {"role": "system", "content": "تو یه نویسنده محتوای تلگرامی هستی. متن‌های کوتاه، احساسی و تأثیرگذار بنویس. از ایموجی‌های مناسب استفاده کن."},
         {"role": "user", "content": selected}
