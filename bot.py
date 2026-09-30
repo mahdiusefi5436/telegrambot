@@ -12,7 +12,6 @@ CATEGORIES = [
     "shaytan",     # شیطنت
     "refaghati",   # رفاقتی
     "asabani",     # عصیانی
-    "eqtesadi",    # اقتصادی
     "tike-dar",    # تیکه دار
     "qamgin",      # غمگین
     "tanhayi",     # تنهایی
