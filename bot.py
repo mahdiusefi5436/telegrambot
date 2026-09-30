@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 TELEGRAM_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 CHANNEL_ID = os.environ["CHANNEL_ID"]
 
-# موضوعاتی که از سایت برداشته می‌شن
+# موضوعاتی که از سایت برداشته می‌شن (اقتصادی حذف شد)
 CATEGORIES = [
     "shaytan",     # شیطنت
     "refaghati",   # رفاقتی
@@ -46,7 +46,6 @@ def send_to_telegram(text):
     """متن رو به تلگرام می‌فرسته (با فرمت نقل قول)"""
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     
-    # هر متن رو توی نقل قول می‌ذاریم
     payload = {
         "chat_id": CHANNEL_ID,
         "text": text,
@@ -71,13 +70,13 @@ while True:
             if texts:
                 all_texts.extend(texts)
         
-        if len(all_texts) < 10:
+        if len(all_texts) < 6:
             print("❌ متن کافی پیدا نشد، دوباره تلاش می‌کنم...")
             time.sleep(60)
             continue
         
-        # ۱۰ تا متن تصادفی انتخاب کن
-        selected = random.sample(all_texts, 10)
+        # ۶ تا متن تصادفی انتخاب کن
+        selected = random.sample(all_texts, 6)
         
         # هر متن رو توی نقل قول بذار و با فاصله به هم بچسبون
         formatted = []
