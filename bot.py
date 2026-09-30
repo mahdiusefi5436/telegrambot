@@ -88,7 +88,7 @@ while True:
         else:
             print(f"❌ خطا در ارسال")
         
-        time.sleep(300)
+        time.sleep(900)
         
     except Exception as e:
         print(f"❌ خطا: {e}")
