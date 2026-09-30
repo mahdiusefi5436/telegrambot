@@ -9,8 +9,6 @@ CHANNEL_ID = os.environ["CHANNEL_ID"]
 
 # موضوعاتی که از سایت برداشته می‌شن (اقتصادی حذف شد)
 CATEGORIES = [
-    "shaytan",     # شیطنت
-    "refaghati",   # رفاقتی
     "asabani",     # عصیانی
     "tike-dar",    # تیکه دار
     "qamgin",      # غمگین
