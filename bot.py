@@ -29,7 +29,6 @@ TOPICS = [
 ]
 
 def generate_lesson():
-    """یه درس کامل با ۳ جمله انگلیسی و معنی فارسی تولید می‌کنه"""
     topic = random.choice(TOPICS)
     
     prompt = f"""
@@ -69,15 +68,12 @@ def generate_lesson():
     return response.choices[0].message.content.strip()
 
 def send_to_telegram(text):
-    """متن رو به تلگرام می‌فرسته"""
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    
     payload = {
         "chat_id": CHANNEL_ID,
         "text": text,
         "parse_mode": "HTML"
     }
-    
     r = requests.post(url, json=payload)
     return r.status_code == 200
 
@@ -86,6 +82,7 @@ print("ربات شروع شد...")
 while True:
     try:
         lesson = generate_lesson()
+        lesson += "\n\n📌 @Zaaban_English"
         
         if send_to_telegram(lesson):
             print(f"✅ پست ارسال شد")
