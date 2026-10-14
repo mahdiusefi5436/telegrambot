@@ -75,8 +75,4 @@ while True:
         else:
             print(f"❌ تلگرام: خطا")
         
-        time.sleep(900)
-        
-    except Exception as e:
-        print(f"❌ خطا: {e}")
-        time.sleep(60)
+      
