@@ -1,7 +1,6 @@
 import os
 import requests
 import random
-import time
 from openai import OpenAI
 
 TELEGRAM_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
@@ -32,7 +31,6 @@ TOPICS = [
 ]
 
 def generate_post():
-    """یه متن کوتاه تولید می‌کنه"""
     topic = random.choice(TOPICS)
     
     prompt = f"""
@@ -60,20 +58,10 @@ def send_to_telegram(text):
     r = requests.post(url, json=payload)
     return r.status_code == 200
 
-print("ربات شروع شد...")
+post = generate_post()
+post += "\n\n📌 @Zaaban_English"
 
-while True:
-    try:
-        post = generate_post()
-        post += "\n\n📌 @Zaaban_English"
-        
-        if send_to_telegram(post):
-            print(f"✅ تلگرام: ارسال شد")
-        else:
-            print(f"❌ تلگرام: خطا")
-        
-        time.sleep(10)
-        
-    except Exception as e:
-        print(f"❌ خطا: {e}")
-        time.sleep(60)
+if send_to_telegram(post):
+    print("✅ پست ارسال شد")
+else:
+    print("❌ خطا در ارسال")
