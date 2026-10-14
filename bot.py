@@ -6,8 +6,6 @@ from openai import OpenAI
 
 TELEGRAM_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 TELEGRAM_CHANNEL_ID = os.environ["TELEGRAM_CHANNEL_ID"]
-EITAA_TOKEN = os.environ["EITAA_TOKEN"]
-EITAA_CHANNEL_ID = os.environ["EITAA_CHANNEL_ID"]
 GROQ_API_KEY = os.environ["GROQ_API_KEY"]
 
 client = OpenAI(
@@ -15,7 +13,6 @@ client = OpenAI(
     base_url="https://api.groq.com/openai/v1"
 )
 
-# موضوعات متنوع
 TOPICS = [
     "یه متن کوتاه و دلشکسته درباره شکست عشقی بنویس",
     "یه متن کوتاه و غمگین درباره تنهایی بنویس",
@@ -63,17 +60,6 @@ def send_to_telegram(text):
     r = requests.post(url, json=payload)
     return r.status_code == 200
 
-def send_to_eitaa(text):
-    url = f"https://eitaayar.ir/api/{EITAA_TOKEN}/sendMessage"
-    params = {"chat_id": EITAA_CHANNEL_ID, "text": text}
-    try:
-        r = requests.get(url, params=params, timeout=30)
-        r.raise_for_status()
-        return True
-    except Exception as e:
-        print(f"❌ خطا در ارسال به ایتا: {e}")
-        return False
-
 print("ربات شروع شد...")
 
 while True:
@@ -85,11 +71,6 @@ while True:
             print(f"✅ تلگرام: ارسال شد")
         else:
             print(f"❌ تلگرام: خطا")
-        
-        if send_to_eitaa(post):
-            print(f"✅ ایتا: ارسال شد")
-        else:
-            print(f"❌ ایتا: خطا")
         
         time.sleep(10)
         
