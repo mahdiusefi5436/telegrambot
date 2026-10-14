@@ -5,7 +5,9 @@ import time
 from openai import OpenAI
 
 TELEGRAM_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
-CHANNEL_ID = os.environ["CHANNEL_ID"]
+TELEGRAM_CHANNEL_ID = os.environ["TELEGRAM_CHANNEL_ID"]
+EITAA_TOKEN = os.environ["EITAA_TOKEN"]
+EITAA_CHANNEL_ID = os.environ["EITAA_CHANNEL_ID"]
 GROQ_API_KEY = os.environ["GROQ_API_KEY"]
 
 client = OpenAI(
@@ -13,54 +15,42 @@ client = OpenAI(
     base_url="https://api.groq.com/openai/v1"
 )
 
+# موضوعات متنوع
 TOPICS = [
-    "یه جمله انگلیسی درباره زندگی روزمره بنویس",
-    "یه جمله انگلیسی درباره کار و شغل بنویس",
-    "یه جمله انگلیسی درباره سفر بنویس",
-    "یه جمله انگلیسی درباره غذا و رستوران بنویس",
-    "یه جمله انگلیسی درباره خرید کردن بنویس",
-    "یه جمله انگلیسی درباره خانواده بنویس",
-    "یه جمله انگلیسی درباره دوستی بنویس",
-    "یه جمله انگلیسی درباره آب و هوا بنویس",
-    "یه جمله انگلیسی درباره سلامتی بنویس",
-    "یه جمله انگلیسی درباره تحصیل و دانشگاه بنویس",
-    "یه جمله انگلیسی درباره تکنولوژی بنویس",
-    "یه جمله انگلیسی درباره ورزش بنویس",
+    "یه متن کوتاه و دلشکسته درباره شکست عشقی بنویس",
+    "یه متن کوتاه و غمگین درباره تنهایی بنویس",
+    "یه متن کوتاه و عاشقانه درباره دلتنگی بنویس",
+    "یه متن کوتاه درباره خیانت بنویس",
+    "یه متن کوتاه و فلسفی درباره زندگی بنویس",
+    "یه متن کوتاه و طنز درباره روزمرگی بنویس",
+    "یه متن کوتاه درباره دانشگاه و درس بنویس",
+    "یه متن کوتاه و انگیزشی درباره موفقیت بنویس",
+    "یه متن کوتاه درباره فراموشی و گذشته بنویس",
+    "یه متن کوتاه و احساسی درباره عشق یک‌طرفه بنویس",
+    "یه متن کوتاه و تلخ درباره جدایی بنویس",
+    "یه متن کوتاه و امیدوارکننده درباره آینده بنویس",
+    "یه متن کوتاه درباره دوستی و رفاقت بنویس",
+    "یه متن کوتاه و طنز درباره پیشی و گربه بنویس",
+    "یه متن کوتاه و فلسفی درباره ذهن و فکر بنویس",
 ]
 
-def generate_lesson():
+def generate_post():
+    """یه متن کوتاه تولید می‌کنه"""
     topic = random.choice(TOPICS)
     
     prompt = f"""
     {topic}
     
-    دقیقاً ۳ جمله کوتاه انگلیسی (حداکثر ۱۰ کلمه) بنویس.
-    برای هر جمله، این اطلاعات رو به این فرمت بده:
-    
-    جمله انگلیسی
-    معنی: (ترجمه فارسی)
-    
-    بعد از ۳ جمله، این بخش رو اضافه کن:
-    
-    📚 لغات مهم:
-    - کلمه انگلیسی: معنی فارسی
-    - کلمه انگلیسی: معنی فارسی
-    - کلمه انگلیسی: معنی فارسی
-    - کلمه انگلیسی: معنی فارسی
-    - کلمه انگلیسی: معنی فارسی
-    - کلمه انگلیسی: معنی فارسی
-    - کلمه انگلیسی: معنی فارسی
-    - کلمه انگلیسی: معنی فارسی
-    - کلمه انگلیسی: معنی فارسی
-    - کلمه انگلیسی: معنی فارسی
-    
-    فقط این فرمت رو رعایت کن. تلفظ ننویس. توضیح اضافه نده.
+    متن باید کوتاه باشه (حداکثر ۳ خط).
+    احساسی، تأثیرگذار و واقعی بنویس.
+    از ایموجی‌های مناسب استفاده کن.
+    فقط متن رو بنویس، توضیح اضافه نده.
     """
     
     response = client.chat.completions.create(
         model="openai/gpt-oss-20b",
         messages=[
-            {"role": "system", "content": "تو یه معلم زبان انگلیسی هستی که جملات کوتاه روزمره با معنی فارسی آموزش می‌دی. تلفظ ننویس."},
+            {"role": "system", "content": "تو یه نویسنده محتوای تلگرامی هستی که متن‌های کوتاه، احساسی و تأثیرگذار می‌نویسی."},
             {"role": "user", "content": prompt}
         ]
     )
@@ -69,27 +59,39 @@ def generate_lesson():
 
 def send_to_telegram(text):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": CHANNEL_ID,
-        "text": text,
-        "parse_mode": "HTML"
-    }
+    payload = {"chat_id": TELEGRAM_CHANNEL_ID, "text": text, "parse_mode": "HTML"}
     r = requests.post(url, json=payload)
     return r.status_code == 200
+
+def send_to_eitaa(text):
+    url = f"https://eitaayar.ir/api/{EITAA_TOKEN}/sendMessage"
+    params = {"chat_id": EITAA_CHANNEL_ID, "text": text}
+    try:
+        r = requests.get(url, params=params, timeout=30)
+        r.raise_for_status()
+        return True
+    except Exception as e:
+        print(f"❌ خطا در ارسال به ایتا: {e}")
+        return False
 
 print("ربات شروع شد...")
 
 while True:
     try:
-        lesson = generate_lesson()
-        lesson += "\n\n📌 @Zaaban_English"
+        post = generate_post()
+        post += "\n\n📌 @Zaaban_English"
         
-        if send_to_telegram(lesson):
-            print(f"✅ پست ارسال شد")
+        if send_to_telegram(post):
+            print(f"✅ تلگرام: ارسال شد")
         else:
-            print(f"❌ خطا در ارسال")
+            print(f"❌ تلگرام: خطا")
         
-        time.sleep(900)
+        if send_to_eitaa(post):
+            print(f"✅ ایتا: ارسال شد")
+        else:
+            print(f"❌ ایتا: خطا")
+        
+        time.sleep(10)
         
     except Exception as e:
         print(f"❌ خطا: {e}")
