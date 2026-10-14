@@ -79,7 +79,7 @@ print("ربات شروع شد...")
 while True:
     try:
         post = generate_post()
-        post += "\n\n Bot
+        post += "\n\n Bot"
         
         if send_to_telegram(post):
             print(f"✅ تلگرام: ارسال شد")
